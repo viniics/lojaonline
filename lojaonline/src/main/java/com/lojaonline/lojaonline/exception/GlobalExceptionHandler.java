@@ -17,4 +17,12 @@ public class GlobalExceptionHandler {
         errorResponse.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(NotEnoughItensException.class)
+    public ResponseEntity<Map<String, String>> handleNotEnoughItensException(NotEnoughItensException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage() + " Quantidade disponível: " + ex.getCurrentItems());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
 }

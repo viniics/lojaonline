@@ -21,9 +21,9 @@ public class Product {
     @Column
     private double price;
     @Column
-    private AtomicInteger quantity;
+    private int quantity;
     
-    public Product(String nome, double price, AtomicInteger quantity) {
+    public Product(String nome, double price, int quantity) {
         this.nome = nome;
         this.price = price;
         this.quantity = quantity;

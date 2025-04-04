@@ -1,7 +1,6 @@
 package com.lojaonline.lojaonline.service;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lojaonline.lojaonline.dto.ProductDTO;
 import com.lojaonline.lojaonline.entity.Product;
+import com.lojaonline.lojaonline.exception.NotEnoughItensException;
 import com.lojaonline.lojaonline.exception.ProductNotFoundException;
 import com.lojaonline.lojaonline.repository.ProductRepository;
 
@@ -30,8 +30,7 @@ public class ProductService {
         writeLock.lock();
         readLock.lock();
         try {
-            Product product = new Product(productDTO.getNome(), productDTO.getPrice(),
-                    new AtomicInteger(productDTO.getQuantity()));
+            Product product = new Product(productDTO.getNome(), productDTO.getPrice(), productDTO.getQuantity());
             return productRepository.save(product);
         } finally {
             writeLock.unlock();
@@ -52,5 +51,21 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Produto Não encontrado"));
+    }
+
+    public Product sell(Long productId, int quantity) {
+        writeLock.lock();
+        readLock.lock();
+        try {
+            Product product = getProductById(productId);
+            if (product.getQuantity() - quantity < 0) {
+                throw new NotEnoughItensException("Estoque insuficiente!", product.getQuantity());
+            }
+            product.setQuantity(product.getQuantity() - quantity);
+            return productRepository.save(product);
+        } finally {
+            writeLock.unlock();
+            readLock.unlock();
+        }
     }
 }
