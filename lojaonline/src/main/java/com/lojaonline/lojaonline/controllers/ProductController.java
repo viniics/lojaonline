@@ -1,16 +1,20 @@
 package com.lojaonline.lojaonline.controllers;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lojaonline.lojaonline.dto.ProductCreatedSuccessfullyResponse;
 import com.lojaonline.lojaonline.dto.ProductDTO;
+import com.lojaonline.lojaonline.dto.StockUpdateDTO;
+import com.lojaonline.lojaonline.dto.StockUpdateResponse;
 import com.lojaonline.lojaonline.entity.Product;
 import com.lojaonline.lojaonline.service.ProductService;
 
@@ -32,19 +36,28 @@ public class ProductController {
 
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductInfo(@PathVariable Long id) {
-    Product response = productService.getProductById(id);
-    return ResponseEntity.ok(response);
+        Product response = productService.getProductById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/products")
-    public ResponseEntity<Product> cadastrarProduto(
-            @RequestParam("nome") String nome,
-            @RequestParam("price") double price,
-            @RequestParam("quantity") int quantity) {
-
-        ProductDTO productDTO = new ProductDTO(nome, price, quantity);
-
+    public ResponseEntity<ProductCreatedSuccessfullyResponse> cadastrarProduto(@RequestBody ProductDTO productDTO) {
         Product savedProduct = productService.cadastrarProduto(productDTO);
-        return ResponseEntity.ok(savedProduct);
+        ProductCreatedSuccessfullyResponse response = new ProductCreatedSuccessfullyResponse(
+                "Produto cadastrado com sucesso.", savedProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @PutMapping("/products/{id}/stock")
+    public ResponseEntity<StockUpdateResponse> atualizarEstoque(
+            @PathVariable Long id,
+            @RequestBody StockUpdateDTO stockUpdateDTO) {
+
+        Product atualizado = productService.atualizarEstoque(id, stockUpdateDTO.getQuantity());
+
+        StockUpdateResponse response = new StockUpdateResponse(atualizado.getQuantity());
+
+        return ResponseEntity.ok(response);
+    }
+
 }

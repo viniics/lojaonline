@@ -1,14 +1,12 @@
 package com.lojaonline.lojaonline.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ProductDTO {
+public class SalesProductDTO {
     private Long id;
-    private String nome;
-    private double price;
-    private int quantity;
+    private String name;
+    private int quantitySold;
 }

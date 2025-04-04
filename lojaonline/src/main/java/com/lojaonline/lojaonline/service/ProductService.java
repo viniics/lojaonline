@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.lojaonline.lojaonline.dto.ProductDTO;
 import com.lojaonline.lojaonline.entity.Product;
 import com.lojaonline.lojaonline.exception.NotEnoughItensException;
+import com.lojaonline.lojaonline.exception.ProductIdAlreadyExistsException;
 import com.lojaonline.lojaonline.exception.ProductNotFoundException;
 import com.lojaonline.lojaonline.repository.ProductRepository;
 
@@ -30,7 +31,10 @@ public class ProductService {
         writeLock.lock();
         readLock.lock();
         try {
-            Product product = new Product(productDTO.getNome(), productDTO.getPrice(), productDTO.getQuantity());
+            if(productRepository.existsById(productDTO.getId())){
+                throw new ProductIdAlreadyExistsException("Produto com ID já existente.");
+            }
+            Product product = new Product(productDTO.getId(),productDTO.getNome(), productDTO.getPrice(), productDTO.getQuantity());
             return productRepository.save(product);
         } finally {
             writeLock.unlock();
@@ -62,6 +66,19 @@ public class ProductService {
                 throw new NotEnoughItensException("Estoque insuficiente!", product.getQuantity());
             }
             product.setQuantity(product.getQuantity() - quantity);
+            return productRepository.save(product);
+        } finally {
+            writeLock.unlock();
+            readLock.unlock();
+        }
+    }
+    
+    public Product atualizarEstoque(Long id, int novaQuantidade) {
+        writeLock.lock();
+        readLock.lock();
+        try {
+            Product product = getProductById(id);
+            product.setQuantity(novaQuantidade);
             return productRepository.save(product);
         } finally {
             writeLock.unlock();
