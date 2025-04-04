@@ -1,4 +1,6 @@
 package com.lojaonline.lojaonline.entity;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,9 +21,9 @@ public class Product {
     @Column
     private double price;
     @Column
-    private Long quantity;
+    private AtomicInteger quantity;
     
-    public Product(String nome, double price, Long quantity) {
+    public Product(String nome, double price, AtomicInteger quantity) {
         this.nome = nome;
         this.price = price;
         this.quantity = quantity;
