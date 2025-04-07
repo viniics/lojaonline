@@ -83,3 +83,12 @@ Enviar requisicao tipo "POST" com o seguinte "Body":
 
 Substituindo X e Y conforme especificado acima
 ---
+*Gerador de Requisicoes*
+---
+Para testar o programa conforme especificado pelos professores, vamos ate o arquivo
+_lojaonline\src\test\java\com\lojaonline\lojaonline\LojaonlineApplicationTests.java_
+Basta rodar o main.
+O programa começa a imprimir na tela o resultado das operações.
+Vale ressaltar que com o gerador de requisicoes, sao criados mais 10 itens alem dos que ja estao no estoque original
+(que eh criado no arquivo _lojaonline\src\main\java\com\lojaonline\lojaonline\util\InventoryMaker.java_)
+O gerador permite, no inicio, verificar todas as funcionalidades do programa!
