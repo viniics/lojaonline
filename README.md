@@ -95,3 +95,5 @@ Vale ressaltar que com o gerador de requisicoes, sao criados mais 10 itens alem 
 O gerador permite verificar todas as funcionalidades do programa e simular casos de acesso concorrente.
 Nisso, eh possivel verificar que o controle de concorrencia funciona perfeitamente dada a implementacao do ReentrantLock.
 Eh possivel verificar que podemos fazer diversas leituras simultaneas, mas nao eh possivel fazer escrita enquanto outra operacao (seja de leitura, seja de escrita) ocorre
+
+*Codigo base criado no _Spring Initializr_*
