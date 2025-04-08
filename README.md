@@ -16,6 +16,7 @@ Ao fazer isso, o servidor sera criado e sera possivel enviar as requisicoes web.
 http://localhost:8080/products -> Mostra todos os produtos cadastrados no sistema
 
 http://localhost:8080/products/id -> Mostra informações de um produto especifico cadastrado no sistema, _id_ deve ser substituido por um inteiro que esteja cadastrado como id de um produto
+
 (ex: http://localhost:8080/products/1)
 
 http://localhost:8080/sales/report -> Mostra o relatorio de vendas conforme especificado
@@ -61,7 +62,7 @@ Caso seja optado por usar o postman, a requisicao "post" deve conter o seguinte 
 ---
 Para atualizar a quantidade em estoque de um produto, é possível utilizar o terminal, com a seguinte linha:
 
-curl -X PUT http://localhost:8080/products/X/stock -H "Content-Type: application/json" -d '{"quantity": Y}'
+*curl -X PUT http://localhost:8080/products/X/stock -H "Content-Type: application/json" -d '{"quantity": Y}'*
 
 No comando acima, X deve ser substituído pelo ID do produto cujo estoque será atualizado.
 
@@ -85,7 +86,7 @@ Para isso, o endpoint eh http://localhost:8080/purchase
 
 Via terminal:
 
-curl -X POST http://localhost:8080/purchase -H "Content-Type: application/json" -d '{"id": X, "quantity": Y}'
+*curl -X POST http://localhost:8080/purchase -H "Content-Type: application/json" -d '{"id": X, "quantity": Y}'*
 
 X eh o ID do produto e Y eh a quantidade desse produto que se deseja comprar.
 
