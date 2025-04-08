@@ -27,19 +27,19 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
+    //Endpoint para listar todos os produtos cadastrados no sistema
     @GetMapping("/products")
     public ResponseEntity<?> getAllProducts() {
         List<Product> response = productService.getAllProducts();
         return ResponseEntity.ok(response);
     }
-
+    //Endpoint que lista informacoes de um produto especifico
     @GetMapping("/products/{id}")
     public ResponseEntity<Product> getProductInfo(@PathVariable Long id) {
         Product response = productService.getProductById(id);
         return ResponseEntity.ok(response);
     }
-
+    //Endpoint para cadastrar um produto. Requer o envio de um Body contendo um objeto ProductDTO
     @PostMapping("/products")
     public ResponseEntity<ProductCreatedSuccessfullyResponse> cadastrarProduto(@RequestBody ProductDTO productDTO) {
         Product savedProduct = productService.cadastrarProduto(productDTO);
@@ -47,7 +47,7 @@ public class ProductController {
                 "Produto cadastrado com sucesso.", savedProduct);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
+    //Endpoint para atualizar o estoque de um produto
     @PutMapping("/products/{id}/stock")
     public ResponseEntity<StockUpdateResponse> atualizarEstoque(
             @PathVariable Long id,

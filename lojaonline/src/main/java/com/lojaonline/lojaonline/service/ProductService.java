@@ -35,6 +35,9 @@ public class ProductService {
         this.purchaseRepository = purchaseRepository;
     }
 
+    // Primeiramente, o metodo bloqueia qualquer tentativa de escrita / leitura, uma
+    // vez que o estoque está sendo atualizado, e qualquer leitura / escrita feita sem
+    // controle de concorrencia poderia resultar em inconsistencia.
     public Product cadastrarProduto(ProductDTO productDTO) {
         writeLock.lock();
         readLock.lock();
@@ -51,7 +54,8 @@ public class ProductService {
         }
 
     }
-
+    // Em metodos que so há leitura, basta apenas bloquear possiveis alteracoes no estoque.
+    // Isso permite que muitas Threads consigam ler os dados de forma consistente.
     public List<Product> getAllProducts() {
         writeLock.lock();
         try {
@@ -62,6 +66,7 @@ public class ProductService {
 
     }
 
+    // Novamente, um metodo de leitura so bloqueia escritas/alteracoes no estoque
     public Product getProductById(Long id) {
         writeLock.lock();
         try {
@@ -72,6 +77,9 @@ public class ProductService {
         }
     }
 
+
+    // Um metodo que altera o estoque so deve ser acessado por uma pessoa por ver.
+    // Por isso, deve bloquear tanto leitura quanto escrita, para evitar respostas ou alteracoes inconsistentes.
     public Product sell(Long productId, int quantity) {
         writeLock.lock();
         readLock.lock();
@@ -88,6 +96,7 @@ public class ProductService {
         }
     }
 
+    // Caso de escrita/alteracao de estoque, ja foi documentado acima
     public Product atualizarEstoque(Long id, int novaQuantidade) {
         writeLock.lock();
         readLock.lock();
@@ -100,7 +109,7 @@ public class ProductService {
             readLock.unlock();
         }
     }
-
+   // Caso de escrita/alteracao de estoque, ja foi documentado acima
     public Purchase newPurchase(PurchaseDTO purchaseDTO) {
         writeLock.lock();
         readLock.lock();
@@ -117,7 +126,7 @@ public class ProductService {
         }
 
     }
-
+   // Caso de leitura de estoque, ja foi documentado acima
     public Map<String, Object> generateSalesReport() {
         writeLock.lock();
         try {
@@ -159,7 +168,6 @@ public class ProductService {
             return report;
         } finally {
             writeLock.unlock();
-
         }
 
     }

@@ -47,7 +47,7 @@ public class LojaonlineApplicationTests {
 						case 3:
 							sendGet("http://localhost:8080/sales/report");
 							break;
-						case 4:
+						default:
 							sendCreateProduct();
 							break;
 					}
