@@ -92,4 +92,6 @@ Basta rodar o main.
 O programa começa a imprimir na tela o resultado das operações.
 Vale ressaltar que com o gerador de requisicoes, sao criados mais 10 itens alem dos que ja estao no estoque original
 (que eh criado no arquivo _lojaonline\src\main\java\com\lojaonline\lojaonline\util\InventoryMaker.java_)
-O gerador permite verificar todas as funcionalidades do programa e simular casos de acesso concorrente!
+O gerador permite verificar todas as funcionalidades do programa e simular casos de acesso concorrente.
+Nisso, eh possivel verificar que o controle de concorrencia funciona perfeitamente dada a implementacao do ReentrantLock.
+Eh possivel verificar que podemos fazer diversas leituras simultaneas, mas nao eh possivel fazer escrita enquanto outra operacao (seja de leitura, seja de escrita) ocorre
