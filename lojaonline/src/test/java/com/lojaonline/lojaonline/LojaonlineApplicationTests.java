@@ -14,7 +14,7 @@ public class LojaonlineApplicationTests {
 	private static final AtomicInteger productCounter = new AtomicInteger(10);
 
 	public static void main(String[] args) {
-		int numThreads = 10;
+		int numThreads = 20;
 		for (int i = 0; i < numThreads; i++) {
 			Thread thread = new Thread(new RequestTask(), "UserThread-" + i);
 			thread.start();
