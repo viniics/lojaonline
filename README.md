@@ -3,7 +3,7 @@ Loja Online
 
 Desenvolvido por: 
 - Vinícius Soares Nóbrega (122110262)
-- Bruno Machado de Assis (1191104401)
+- Bruno Machado de Assis (119110401)
 
 Repositório criado para a solução do "Lab10" da disciplina de Programação Concorrente!
 
@@ -42,7 +42,7 @@ X -> Um numero inteiro
 Z -> um preço, que pode estar no formato U.V, onde U e V sao numeros
 W -> Um numero inteiro
 
-Caso seja optado por usar o postman, a requisicao put deve conter o seguinte body Json:
+Caso seja optado por usar o postman, a requisicao "post" deve conter o seguinte body Json:
  {"id": X,
            "nome": "Y",
            "price": Z,
@@ -76,6 +76,7 @@ Via terminal:
 curl -X POST http://localhost:8080/purchase -H "Content-Type: application/json" -d '{"id": X, "quantity": Y}'
 
 X eh o ID do produto e Y eh a quantidade desse produto que se deseja comprar.
+Ambos devem ser inteiros!
 
 Via Postman:
 Enviar requisicao tipo "POST" com o seguinte "Body":
@@ -91,4 +92,4 @@ Basta rodar o main.
 O programa começa a imprimir na tela o resultado das operações.
 Vale ressaltar que com o gerador de requisicoes, sao criados mais 10 itens alem dos que ja estao no estoque original
 (que eh criado no arquivo _lojaonline\src\main\java\com\lojaonline\lojaonline\util\InventoryMaker.java_)
-O gerador permite, no inicio, verificar todas as funcionalidades do programa!
+O gerador permite verificar todas as funcionalidades do programa e simular casos de acesso concorrente!
