@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lojaonline.lojaonline.dto.PurchaseDTO;
 import com.lojaonline.lojaonline.entity.Purchase;
-import com.lojaonline.lojaonline.service.PurchaseService;
+import com.lojaonline.lojaonline.service.ProductService;
 
 @RestController
 public class PurchaseController {
-    private final PurchaseService purchaseService;
+    private final ProductService purchaseService;
 
     @Autowired
-    public PurchaseController(PurchaseService purchaseService) {
+    public PurchaseController(ProductService purchaseService) {
         this.purchaseService = purchaseService;
     }
 
